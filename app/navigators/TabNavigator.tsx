@@ -13,7 +13,7 @@ export const TabNavigator = ()=>{
   return(
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#ca84f2', // 활성 탭 색상
+        tabBarActiveTintColor: '#854442', // 활성 탭 색상
         tabBarInactiveTintColor: 'gray',  // 비활성 탭 색상
         tabBarItemStyle : {
           borderRadius : 10

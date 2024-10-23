@@ -10,7 +10,7 @@ import { MainTabNavigator } from './navigators/MainNavigator';
  * 스크린
  */
 
-import {HomeScreen} from './screens/HomeScreen';
+import {HomeScreen} from './screens/HomeScreen/HomeScreen';
 // 스택 네비게이터 생성
 const Stack = createStackNavigator();
 

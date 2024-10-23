@@ -1,15 +1,13 @@
 import React from "react"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator } from '@react-navigation/stack';
 
 /**
  * Navigator
  */
-import { HomeStackNavigator } from "./HomeNavigator"
-import { MyPageNavigator } from "./MyPageNavigator";
 import {TabNavigator} from './TabNavigator'
-import { LoginScreen } from "../screens/LoginScreen";
+import { LoginScreen } from "../screens/HomeScreen/LoginScreen";
+import { SignUpScreen } from "../screens/HomeScreen/SigupScreen";
 
 const Stack = createStackNavigator()
 
@@ -19,6 +17,7 @@ export const MainTabNavigator = ()=>{
     <Stack.Navigator>
       <Stack.Screen name="Tab" component={TabNavigator} options={{headerShown : false}}/>
       <Stack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown : false}}/>
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{headerShown : false}}/>
     </Stack.Navigator>
     // <Tab.Navigator
     //   screenOptions={{
