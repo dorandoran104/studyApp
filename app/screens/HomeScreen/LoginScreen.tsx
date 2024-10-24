@@ -64,30 +64,6 @@ export const LoginScreen:React.FC<{navigation:any}> = ({navigation})=>{
         </View>
       </ScrollView>
     </SafeAreaView>
-    // <SafeAreaView style={{flex : 1}}>
-    //   <ScrollView contentContainerStyle={{flexGrow : 1}}>
-    //     <View style={styles.header}>
-    //       <Icon name="chevron-back-outline" size={25}></Icon>
-    //     </View>
-    //     <View style={styles.container}>
-    //       <View style={styles.loginSection}>
-    //         <View style={styles.row}>
-    //           <Text style={styles.text}>아이디</Text>
-    //           <TextInput style={styles.textInput}></TextInput>
-    //         </View>
-    //         <View style={styles.row}>
-    //           <Text style={styles.text}>비밀번호</Text>
-    //           <TextInput style={styles.textInput}></TextInput>  
-    //         </View>
-    //         <View style={styles.row}>
-    //           <TouchableOpacity style={styles.button}>
-    //             <Text style={styles.buttonText}>로그인</Text>
-    //           </TouchableOpacity>
-    //         </View>
-    //       </View>
-    //     </View>
-    //   </ScrollView>
-    // </SafeAreaView>
   )
 }
 

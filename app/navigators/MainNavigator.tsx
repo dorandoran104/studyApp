@@ -7,7 +7,8 @@ import { createStackNavigator } from '@react-navigation/stack';
  */
 import {TabNavigator} from './TabNavigator'
 import { LoginScreen } from "../screens/HomeScreen/LoginScreen";
-import { SignUpScreen } from "../screens/HomeScreen/SigupScreen";
+import { SignUpScreen } from "../screens/HomeScreen/SignUpScreen";
+import { SignUpScreen2 } from "../screens/HomeScreen/SignUpScreen2";
 
 const Stack = createStackNavigator()
 
@@ -18,6 +19,7 @@ export const MainTabNavigator = ()=>{
       <Stack.Screen name="Tab" component={TabNavigator} options={{headerShown : false}}/>
       <Stack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown : false}}/>
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{headerShown : false}}/>
+      <Stack.Screen name="SignUpScreen2" component={SignUpScreen2} options={{headerShown : false}}/>
     </Stack.Navigator>
     // <Tab.Navigator
     //   screenOptions={{

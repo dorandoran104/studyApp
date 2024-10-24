@@ -12,7 +12,7 @@ export const useFetch = {
 
   usePostFetch : async (url:string,param:object)=>{
     const fullUrl = `${SERVER_URL}${url}`
-    console.log(SERVER_URL)
+    // console.log(SERVER_URL)
     let response = await fetch(fullUrl,{
       method : 'post'
       ,body : JSON.stringify(param)
@@ -22,11 +22,18 @@ export const useFetch = {
     })
     .then((res)=> res.json())
     .then((res)=>{
-      console.log(res)
+      res.promiseResult = true
+      return res
     })
     .catch((err)=>{
       console.log(err)
+      return {
+        result : false
+        ,promiseResult : false
+      }
+
     })
+    console.log(response)
     return response;
   }
 } 

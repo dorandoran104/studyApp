@@ -1,5 +1,5 @@
 import React, { useState,useRef, useEffect } from "react";
-import { View, SafeAreaView, StyleSheet, Text,TextInput,TouchableOpacity,Animated,Easing} from "react-native";
+import { View, SafeAreaView, StyleSheet, Text,TextInput,TouchableOpacity,Animated,Easing, Alert} from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { useFetch } from "../../hooks/useFetch";
 
@@ -18,9 +18,11 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
   const [showAlert, setShowAlert] = useState(false);
   const [showSelect,setShowSelect] = useState(false);
   const [showCertification,setShowCertification] = useState(false);
+  const [showCertificationAlert,setShowCertificationAlert] = useState(false)
 
   const [mobileInputEditAble,setMobileInputEditAble] = useState(true);
   const [editable,setEditAble] = useState(false);
+  const [isDisabled,setDisabled] = useState(false);
 
   
 
@@ -28,14 +30,47 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
 
   const mobileNumberInput = useRef<TextInput>(null);
 
+  /**
+   * 숫자만 입력
+   * @param text 
+   */
   const checkMobileNumber = (text:string)=>{
     const replaceText = text.replace(/[^0-9]/g,'');
     setMobileNumber(replaceText);
   }
 
-  const sendCertification = ()=>{
+  /**
+   * 인증번호 발송
+   * @returns 
+   */
+  const sendCertification = async ()=>{
     setEditAble(true);
+
+    let data = await useFetch.usePostFetch('/home/api/sendCertification',{mobileNumber : mobileNumber})
+    if(data.result && data.promiseResult){
+      setCertificationNumber(data.certificationNumber)
+      Alert.alert(data.certificationNumber)
+    }
+    if(!data.result || !data.promiseResult){
+      Alert.alert('오류가 발생했습니다.');
+      return false
+    }
   }
+
+  const checkCertification = (text:string)=>{
+    setShowCertificationAlert(false);
+    // console.log(text)
+    if(text.length === 6 && text === certificationNumber){
+      setDisabled(true)
+      setEditAble(false)
+      return false
+    }
+    if(text.length === 6){
+      setShowCertificationAlert(true);
+      return false
+    }
+  }
+
 
   const startShakeAnimation = () => {
     shakeAnimation.setValue(0); // 애니메이션 초기화
@@ -82,7 +117,6 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
     setMobileInputEditAble(false)
     mobileNumberInput.current?.blur();
     setShowSelect(true);
-    console.log(selectValue)
     if(selectValue === null || selectValue === ''){
       setShowCertification(false)
       return
@@ -116,7 +150,7 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
               <Text style={styles.mobileAlert}>{alert}</Text>
             </Animated.View>
           )}
-        </View>
+    
         {showSelect && (
             <>
               <View style={styles.row}>
@@ -146,6 +180,8 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
                     placeholder={editable ? "인증번호" : "발송버튼을 눌러주세요"}
                     editable={editable}
                     keyboardType="numeric"
+                    onChangeText={checkCertification}
+                    maxLength={6}
                   >
                   </TextInput>
                   <TouchableOpacity style={styles.button} onPress={sendCertification}>
@@ -153,8 +189,25 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
                   </TouchableOpacity>
                 </View>
               </View>
+              {showCertificationAlert &&(
+                <View style={styles.row}>
+                <Text style={styles.mobileAlert}>인증번호를 확인해주세요</Text>
+              </View>
+              )}
+              
             </>
           )}
+        </View>
+        <View style={styles.bottom}>
+          <TouchableOpacity  
+            style={isDisabled ? styles.bottomButton : styles.bottomButtonDisabled}
+            activeOpacity={!isDisabled ? 1 : 0.2}
+            disabled={!isDisabled}
+            onPress={()=>navigation.navigate('SignUpScreen2',{mobileNumber:mobileNumber})}
+          >
+            <Text style={styles.bottomButtonText}>다음</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   )
@@ -167,10 +220,10 @@ const styles = StyleSheet.create({
   },
   section : {
     marginTop : 20,
-    flexGrow : 1
+    flexGrow : 1,
   },
   mobileSection : {
-
+    height : '90%'
   },
   row : {
     marginTop : 20,
@@ -238,5 +291,26 @@ const styles = StyleSheet.create({
     width : '100%',
     // backgroundColor : 'white'
     // height : 10
+  },
+  bottom:{
+    height : '7%'
+  },
+  bottomButton : {
+    backgroundColor : '#be9b7b',
+    height : '100%',
+    justifyContent : 'center',
+    alignItems : 'center',
+    borderRadius : 10
+  },
+  bottomButtonDisabled : {
+    backgroundColor : 'gray',
+    height : '100%',
+    justifyContent : 'center',
+    alignItems : 'center',
+    borderRadius : 10
+  },
+  bottomButtonText : {
+    fontSize : 20,
+    color : 'white'
   }
 })
