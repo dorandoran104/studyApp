@@ -1,8 +1,10 @@
 import React, { useState,useRef, useEffect } from "react";
-import { View, SafeAreaView, StyleSheet, Text,TextInput,TouchableOpacity,Animated,Easing, Alert} from "react-native";
+import { View, SafeAreaView, StyleSheet, Text,TextInput,TouchableOpacity,Animated,Easing, Alert, Dimensions} from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { useFetch } from "../../hooks/useFetch";
+import { BottomButtonComponent } from "../../components/BottomButtonComponent";
 
+const {width,height} = Dimensions.get('window')
 
 export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
 
@@ -199,14 +201,19 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
           )}
         </View>
         <View style={styles.bottom}>
-          <TouchableOpacity  
+          <BottomButtonComponent
+            title="다음"
+            disabled={!isDisabled}
+            onPress={()=>{navigation.navigate("SignUpScreen2",{mobileNumber:mobileNumber})}}
+          />
+          {/* <TouchableOpacity  
             style={isDisabled ? styles.bottomButton : styles.bottomButtonDisabled}
             activeOpacity={!isDisabled ? 1 : 0.2}
             disabled={!isDisabled}
             onPress={()=>navigation.navigate('SignUpScreen2',{mobileNumber:mobileNumber})}
           >
             <Text style={styles.bottomButtonText}>다음</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </SafeAreaView>
@@ -219,11 +226,12 @@ const styles = StyleSheet.create({
     ,marginHorizontal : 20
   },
   section : {
-    marginTop : 20,
+    // marginTop : 20,
     flexGrow : 1,
   },
   mobileSection : {
-    height : '90%'
+    height : height * 0.8
+    // ,backgroundColor : 'red'
   },
   row : {
     marginTop : 20,
@@ -285,32 +293,12 @@ const styles = StyleSheet.create({
   mobileAlert : {
     marginTop : 10,
     color : 'red'
-    // ,display : 'none'
   },
   pickerSection : {
     width : '100%',
-    // backgroundColor : 'white'
-    // height : 10
   },
   bottom:{
-    height : '7%'
+    height : height * 0.1,
+    padding : 10
   },
-  bottomButton : {
-    backgroundColor : '#be9b7b',
-    height : '100%',
-    justifyContent : 'center',
-    alignItems : 'center',
-    borderRadius : 10
-  },
-  bottomButtonDisabled : {
-    backgroundColor : 'gray',
-    height : '100%',
-    justifyContent : 'center',
-    alignItems : 'center',
-    borderRadius : 10
-  },
-  bottomButtonText : {
-    fontSize : 20,
-    color : 'white'
-  }
 })
