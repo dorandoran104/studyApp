@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 10,
-    elevation: 5, // Android 그림자 효과
+    // elevation: 5, // Android 그림자 효과
     alignItems: 'center',
   },
   title: {
@@ -134,9 +134,11 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    borderColor: '#be9b7b', // 입력창 테두리 색상
-    borderWidth: 1,
+    // borderColor: '#be9b7b', // 입력창 테두리 색상
+    // borderWidth: 1,
     paddingHorizontal: 15,
+    elevation : 15,
+    marginTop : 10,
     borderRadius: 10,
     backgroundColor: '#fff4e6', // 입력창 배경색
     color: '#3c2f2f', // 입력 텍스트 색상
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   link: {
-    marginTop: 15,
+    marginTop: 20,
   },
   linkText: {
     color: 'black', // 링크 텍스트 색상

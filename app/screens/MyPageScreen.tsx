@@ -18,11 +18,11 @@ export const MyPageScreen:React.FC<{navigation:any}> = ({navigation})=>{
           </TouchableOpacity>
           <View style={styles.menu}>
             <TouchableOpacity style={styles.menuRow}>
-              <Icon name="create-outline" size={30} color="#000" />
+              <Icon name="create-outline" size={22} color="#000" />
               <Text style={styles.menuText}>개인정보 수정</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.menuRow}>
-              <Icon name="settings-outline" size={30} color={'#000'}></Icon>
+              <Icon name="settings-outline" size={22} color={'#000'}></Icon>
               <Text style={styles.menuText}>설정</Text>
             </TouchableOpacity>
           </View>
@@ -81,44 +81,8 @@ const styles = StyleSheet.create({
     ,width : '90%'
   },
   menuText : {
-    fontSize : 25
+    fontSize : 16
     ,marginLeft : 15
   }
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#6A5ACD', // 보라색 배경
-  //   padding: 20,
-  // },
-  // header: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  // },
-  // headerText: {
-  //   fontSize: 24,
-  //   color: 'white',
-  // },
-  // profileSection: {
-  //   alignItems: 'center',
-  //   marginVertical: 20,
-  // },
-  // profileImage: {
-  //   width: 80,
-  //   height: 80,
-  //   borderRadius: 40,
-  // },
-  // username: {
-  //   fontSize: 18,
-  //   color: 'white',
-  //   marginTop: 10,
-  // },
-  // menu: {
-  //   backgroundColor: 'white',
-  //   borderRadius: 10,
-  //   padding: 15,
-  // },
-  // menuItem: {
-  //   fontSize: 16,
-  //   marginVertical: 10,
-  // },
+  
 });
