@@ -22,7 +22,11 @@ export const useFetch = {
     })
     .then((res)=> res.json())
     .then((res)=>{
-      res.promiseResult = true
+      if(res.result){
+        res.promiseResult = true
+      }else{
+        res.promiseResult = false
+      }
       return res
     })
     .catch((err)=>{

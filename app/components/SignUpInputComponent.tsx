@@ -8,17 +8,35 @@ interface SignUpInputProps {
   placeholder ?: string
   value ?: string
   editable : boolean
-  button : boolean
-  buttonTitle ?:string
+  
+  button ?: ButtonProps
+  // button : boolean
+  // buttonTitle ?:string
+  // buttonClick ?:(event: GestureResponderEvent) => void,
+  // buttonDisabled ?:boolean
+
   disabled ?:boolean
   maxLength ?:number
-  buttonClick ?:(event: GestureResponderEvent) => void,
   onInput ?:(text:string)=>void,
   secure ?: boolean
-  buttonDisabled ?:boolean
-  alert ?: boolean
-  alertText ?: string
+  alert ?: AlertProps
 }
+
+interface ButtonProps{
+  show : boolean
+  ,text : string
+  ,onPress : (event:GestureResponderEvent) => void
+  ,disabled : boolean
+
+}
+
+interface AlertProps{
+  show : boolean
+  ,text ?:string
+  ,color ?:string
+}
+
+
 
 export const SignUpInputComponent:React.FC<SignUpInputProps> = (props)=>{
   return (
@@ -39,22 +57,22 @@ export const SignUpInputComponent:React.FC<SignUpInputProps> = (props)=>{
         secureTextEntry={props.secure}
         placeholder={props.placeholder}
       ></TextInput>
-      {props.button && (
+      {props.button && props.button.show && (
         <TouchableOpacity 
-          style={[styles.button,props.buttonDisabled ? styles.disabledButtonColor : styles.buttonColor]}
-          disabled={props.disabled}
-          onPress={props.buttonClick}
+          style={[styles.button,props.button.disabled ? styles.disabledButtonColor : styles.buttonColor]}
+          disabled={props.button.disabled}
+          onPress={props.button.onPress}
         >
           <Text 
-            style={styles.buttonText}
-          >{props.buttonTitle}</Text>
+            style={[styles.buttonText]}
+          >{props.button.text}</Text>
         </TouchableOpacity>
       )}
       </View>
     </View>
-    {props.alert && (
+    {props.alert != null && props.alert.show && (
       <View>
-        <Text style={styles.alertText}>가나다라</Text>
+        <Text style={{color : props.alert.color == null ? "red" : props.alert.color}}>{props.alert.text}</Text>
       </View>
     )}
   </>
@@ -96,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor : 'lightgray',
   },
   button : {
-    backgroundColor : '#be9b7b',
+   
     borderRadius : 10,
     height : 50,
     marginTop : 20,
@@ -110,12 +128,12 @@ const styles = StyleSheet.create({
     color : 'white'
   },
   disabledButtonColor : {
-
+    backgroundColor : 'lightgray'
   },
   buttonColor : {
-
+    backgroundColor : '#be9b7b',
   },
   alertText : {
-    color : 'red'
+    
   }
 })

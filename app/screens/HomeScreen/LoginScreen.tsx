@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import { TouchableOpacity, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Alert } from "react-native"
 import { useFetch } from "../../hooks/useFetch"
-import Icon from 'react-native-vector-icons/Ionicons'
+import * as SecureStore from 'expo-secure-store';
 
 export const LoginScreen:React.FC<{navigation:any}> = ({navigation})=>{
-  const [email,setEmail] = useState("");
+  const [id,setId] = useState("");
   const [password,setPassword] = useState("");
   const fetch = useFetch;
 
   const handleLogin = async ()=>{
-    if(email == null || email == ''){
+    if(id == null || id == ''){
       Alert.alert('이메일을 입력해 주세요');
       return false;
     }
@@ -19,25 +19,36 @@ export const LoginScreen:React.FC<{navigation:any}> = ({navigation})=>{
       return false;
     }
     const param = {
-      email : email
+      id : id
       ,password : password
     }
+    
     let data = await useFetch.usePostFetch('/home/api/login',param);
+    if(data.promiseResult){
+      await SecureStore.setItemAsync('accessToken', data.data.access_token);
+      await SecureStore.setItemAsync('refreshToken',data.data.refresh_token);
+      console.log('ss')
+      navigation.replace("HomeScreen")
+      
+      return false
+    }
+    if(data.errMessage != null && data.errMessage != ''){
+      Alert.alert(data.errMessage)
+      return false
+    }
+    Alert.alert('오류가 발생했습니다')
   }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.loginSection}>
-          {/* <Text style={styles.title}>환영합니다!</Text> */}
-          
-          {/* 이메일 입력 필드 및 레이블 */}
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>이메일</Text>
+            <Text style={styles.label}>아이디</Text>
             <TextInput
               placeholder="이메일 입력"
               style={styles.input}
-              value={email}
-              onChangeText={setEmail}
+              value={id}
+              onChangeText={setId}
               placeholderTextColor="#fff4e6" // Placeholder 텍스트 색상
             />
           </View>

@@ -65,6 +65,8 @@ export const SignUpScreen:React.FC<{navigation:any}> = ({navigation})=>{
     if(text.length === 6 && text === certificationNumber){
       setDisabled(true)
       setEditAble(false)
+      // navigation.navigator('SignUpScreen2')
+      navigation.replace("SignUpScreen2",{mobileNumber:mobileNumber})
       return false
     }
     if(text.length === 6){
