@@ -1,7 +1,15 @@
-import React from "react"
-import { SafeAreaView, ScrollView, Text, View } from "react-native"
+import React, {useEffect } from "react"
+import { SafeAreaView, ScrollView, Text, View, } from "react-native"
+import { useFetch } from "../../hooks/useFetch"
+import { useFocusEffect } from "@react-navigation/native"
 
-export const HomeScreen = ()=>{
+export const HomeScreen:React.FC<{navigation:any}> = ({navigation})=>{
+
+  useFocusEffect(()=>{
+    const response = useFetch.useGetFetch("/home/api/main",navigation)
+   
+  })
+  
   return(
     <SafeAreaView style={{flex : 1}}>
       <ScrollView>

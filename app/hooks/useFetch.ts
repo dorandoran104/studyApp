@@ -1,12 +1,37 @@
 import { SERVER_URL } from '@env';
+import * as SecureStore from 'expo-secure-store';
 
 export const useFetch = {
-  useGetFetch : async (url:string)=>{
+  useGetFetch : async (url:string,navigation:any)=>{
+    const accessToken = await SecureStore.getItemAsync('accessToken');
     const fullUrl = `${SERVER_URL}${url}`;
-
-    let response = await fetch(url)
-    .then((res)=> res.json())
-
+    let response = await fetch(fullUrl,{
+      method : 'get'
+      ,headers : {
+        'Authorization' : `Bearer ${accessToken}`
+      }
+    })
+    .then(async(res)=>{
+      if(res.status === 401){
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "LoginScreen" }],
+        })
+        return {result : false,promiseResult : false}
+      }
+      const data = await res.json();
+      const newAccessToken = data.headers.get('New-Access-Token');
+      if(newAccessToken){
+        await SecureStore.setItemAsync('accessToken', newAccessToken);
+      }
+      data.promiseResult = data.result ? true : false;
+      return data;
+    })
+    .catch((err)=>{
+      console.log(err)
+      return {result : false,promiseResult : false}
+    })
+    // // console.log(response)
     return response;
   },
 
@@ -39,5 +64,5 @@ export const useFetch = {
     })
     console.log(response)
     return response;
-  }
+  },
 } 

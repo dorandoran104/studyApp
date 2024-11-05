@@ -27,16 +27,21 @@ export const LoginScreen:React.FC<{navigation:any}> = ({navigation})=>{
     if(data.promiseResult){
       await SecureStore.setItemAsync('accessToken', data.data.access_token);
       await SecureStore.setItemAsync('refreshToken',data.data.refresh_token);
-      console.log('ss')
-      navigation.replace("HomeScreen")
       
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Tab" }],
+    });
+      
+    }
+    if(!data.promiseResult){
+      if(data.errMessage != null && data.errMessage != ''){
+        Alert.alert(data.errMessage)
+        return false
+      }
+      Alert.alert('오류가 발생했습니다')
       return false
     }
-    if(data.errMessage != null && data.errMessage != ''){
-      Alert.alert(data.errMessage)
-      return false
-    }
-    Alert.alert('오류가 발생했습니다')
   }
   return (
     <SafeAreaView style={styles.container}>

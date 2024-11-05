@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
  */
 import { HomeStackNavigator } from "./HomeNavigator"
 import { MyPageNavigator } from "./MyPageNavigator";
+import { ScheduleNavigator } from "./ScheduleNavigator";
 
 const Tab = createBottomTabNavigator()
 export const TabNavigator = ()=>{
@@ -20,7 +21,6 @@ export const TabNavigator = ()=>{
         }
       }}
     >
-      
       <Tab.Screen 
         name="Home" 
         component={HomeStackNavigator} 
@@ -37,6 +37,36 @@ export const TabNavigator = ()=>{
           }}
         />
         <Tab.Screen
+          name="Class"
+          component={ScheduleNavigator}
+          options={{
+            headerShown : false
+            ,tabBarLabel : "스터디"
+            ,tabBarIcon : ({color,focused})=>(
+              <Ionicons
+                name={focused ? 'school' : 'school-outline'}
+                size={24}
+                color={color}  
+              />
+            )
+          }}
+          />
+        <Tab.Screen
+          name="Schedule"
+          component={ScheduleNavigator}
+          options={{
+            headerShown : false
+            ,tabBarLabel : "일정"
+            ,tabBarIcon : ({color,focused})=>(
+              <Ionicons
+                name={focused ? "calendar-number" : "calendar-number-outline"}
+                size={24}
+                color={color}  
+              />
+            )
+          }}
+          />
+        <Tab.Screen
           name="MyPage"
           component={MyPageNavigator}
           options={{
@@ -44,13 +74,14 @@ export const TabNavigator = ()=>{
             ,tabBarLabel : "마이페이지"
             ,tabBarIcon : ({color,focused})=>(
               <Ionicons
-                name="person-circle"
+                name={focused ? "person-circle" : "person-circle-outline"}
                 size={24}
                 color={color}
               />
             )
           }}
         />
+        
     </Tab.Navigator>
   )
 }
