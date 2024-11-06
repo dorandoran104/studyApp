@@ -8,13 +8,7 @@ interface SignUpInputProps {
   placeholder ?: string
   value ?: string
   editable : boolean
-  
   button ?: ButtonProps
-  // button : boolean
-  // buttonTitle ?:string
-  // buttonClick ?:(event: GestureResponderEvent) => void,
-  // buttonDisabled ?:boolean
-
   disabled ?:boolean
   maxLength ?:number
   onInput ?:(text:string)=>void,

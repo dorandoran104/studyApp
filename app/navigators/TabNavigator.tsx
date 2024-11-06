@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { HomeStackNavigator } from "./HomeNavigator"
 import { MyPageNavigator } from "./MyPageNavigator";
 import { ScheduleNavigator } from "./ScheduleNavigator";
+import { ClassNavigator } from "./ClassNavigator";
 
 const Tab = createBottomTabNavigator()
 export const TabNavigator = ()=>{
@@ -18,7 +19,8 @@ export const TabNavigator = ()=>{
         tabBarInactiveTintColor: 'gray',  // 비활성 탭 색상
         tabBarItemStyle : {
           borderRadius : 10
-        }
+        },
+        unmountOnBlur : true
       }}
     >
       <Tab.Screen 
@@ -38,16 +40,18 @@ export const TabNavigator = ()=>{
         />
         <Tab.Screen
           name="Class"
-          component={ScheduleNavigator}
+          component={ClassNavigator}
+          
           options={{
             headerShown : false
-            ,tabBarLabel : "스터디"
+            ,tabBarLabel : "모임"
             ,tabBarIcon : ({color,focused})=>(
               <Ionicons
                 name={focused ? 'school' : 'school-outline'}
                 size={24}
                 color={color}  
               />
+              
             )
           }}
           />

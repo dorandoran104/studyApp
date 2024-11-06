@@ -26,7 +26,7 @@ export const LoginScreen:React.FC<{navigation:any}> = ({navigation})=>{
     let data = await useFetch.usePostFetch('/home/api/login',param);
     if(data.promiseResult){
       await SecureStore.setItemAsync('accessToken', data.data.access_token);
-      await SecureStore.setItemAsync('refreshToken',data.data.refresh_token);
+      // await SecureStore.setItemAsync('refreshToken',data.data.refresh_token);
       
       navigation.reset({
         index: 0,
