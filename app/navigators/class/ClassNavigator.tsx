@@ -4,8 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 /**
  * Screen
  */
-import { ClassScreen } from "../screens/ClassScreen/ClassScreen";
-import { ClassWriteScreen } from "../screens/ClassScreen/ClassWriteScreen";
+import { ClassScreen } from "../../screens/ClassScreen/ClassScreen";
+import { ClassWriteScreen } from "../../screens/ClassScreen/ClassWriteScreen";
 import { useFocusEffect } from "@react-navigation/native";
 
 const Stack = createStackNavigator()

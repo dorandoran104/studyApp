@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor : 'lightgray',
   },
   button : {
-   
     borderRadius : 10,
     height : 50,
     marginTop : 20,

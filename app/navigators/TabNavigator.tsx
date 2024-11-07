@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { HomeStackNavigator } from "./HomeNavigator"
 import { MyPageNavigator } from "./MyPageNavigator";
 import { ScheduleNavigator } from "./ScheduleNavigator";
-import { ClassNavigator } from "./ClassNavigator";
+import { ClassNavigator } from "./class/ClassNavigator";
 
 const Tab = createBottomTabNavigator()
 export const TabNavigator = ()=>{

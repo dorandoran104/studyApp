@@ -6,15 +6,19 @@ import { TextAreaComponent } from "../../components/TextAreaComponent";
 import { SelectComponent } from "../../components/SelectComponent";
 import { ConfirmComponent } from "../../components/ConfirmComponent";
 import { useFetch } from "../../hooks/useFetch";
+import { DatePickerComponent } from "../../components/DatePickerComponent";
 
 export const ClassWriteScreen:React.FC<{navigation:any,route:any}>=({navigation,route})=>{
-  const [title,setTitle] = useState("")
+  const [name,setName] = useState("")
   const [selectedValue, setSelectedValue] = useState<string>("");
   const [description,setDescription] = useState("")
 
   const [buttonDisabled,setButtonDisabled] = useState(true)
 
   const [viewModal,setViewModal] = useState(false)
+
+  const [startDate,setStartDate] = useState(new Date())
+  const [endDate,setEndDate] = useState(new Date())
 
   const handleValueChange = (value: string) => {
     setSelectedValue(value); // 선택한 값 저장
@@ -24,13 +28,18 @@ export const ClassWriteScreen:React.FC<{navigation:any,route:any}>=({navigation,
   }
 
   const sendApi = async ()=>{
-    console.log('sss')
+    if(startDate > endDate){
+      Alert.alert('종료일을 확인해 주세요')
+      return false
+    }
     const param = {
-      title : title
+      name : name
       ,description : description
       ,maxMembers : selectedValue
+      ,startDate : startDate
+      ,endDate : endDate
     }
-    let response =await useFetch.usePostFetch("/class/api/write",param)
+    let response =await useFetch.usePostFetch("/class/api/save",param,navigation)
     if(response.promiseResult){
       Alert.alert('저장되었습니다.')
       navigation.replace("ClassScreen")
@@ -46,13 +55,13 @@ export const ClassWriteScreen:React.FC<{navigation:any,route:any}>=({navigation,
   }
 
   useEffect(()=>{
-    if(title != '' && selectedValue != '' && description != ''){
+    if(name != '' && selectedValue != '' && description != ''){
       setButtonDisabled(false)
     }else{
       setButtonDisabled(true)
     }
     console.log(buttonDisabled)
-  },[title,selectedValue,description])
+  },[name,selectedValue,description])
 
   return(
     <SafeAreaView style={styles.container}>
@@ -62,8 +71,8 @@ export const ClassWriteScreen:React.FC<{navigation:any,route:any}>=({navigation,
           <SignUpInputComponent 
             label={"모임명"} 
             editable={true}          
-            value={title}
-            onInput={setTitle}
+            value={name}
+            onInput={setName}
           />
           <TextAreaComponent
             label={"모임 설명"}
@@ -76,11 +85,23 @@ export const ClassWriteScreen:React.FC<{navigation:any,route:any}>=({navigation,
             selectedValue={selectedValue} 
             onValueChange={handleValueChange}          
           />
+          <DatePickerComponent
+            label={"모임 시작일"}
+            value={startDate}
+            onChange={setStartDate}
+          />
+           <DatePickerComponent
+            label={"모임 종료일"}
+            value={endDate}
+            onChange={setEndDate}
+          />
+          
+
           <ConfirmComponent 
-          viewModal={viewModal}
-          setViewModal={setViewModal}
-          callback={sendApi}
-          text="저장하시겠습니까?"
+            viewModal={viewModal}
+            setViewModal={setViewModal}
+            callback={sendApi}
+            text="저장하시겠습니까?"
           ></ConfirmComponent>
         </View>
       </ScrollView>
